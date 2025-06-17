@@ -1,38 +1,39 @@
 import React, { useState } from 'react';
 import '../styles/main.css';
 
-export default function InvoiceForm( { onSuccess}) {
+export default function InvoiceForm({ onSuccess }) {
   const [clientName, setClientName] = useState('');
   const [clientEmail, setClientEmail] = useState('');
   const [projectDesc, setProjectDesc] = useState('');
   const [taxRate, setTaxRate] = useState(0);
   const [notes, setNotes] = useState('');
-
   const [items, setItems] = useState([
     { id: Date.now(), description: '', quantity: 1, rate: 0 }
   ]);
 
   const handleItemChange = (index, field, value) => {
     const updatedItems = [...items];
-    if (field === 'description') {
-      updatedItems[index][field] = value;
-    } else {
-      updatedItems[index][field] = Math.max(0, parseFloat(value) || 0);
-    }
+    updatedItems[index][field] = field === 'description'
+      ? value
+      : Math.max(0, parseFloat(value) || 0);
     setItems(updatedItems);
   };
 
   const handleAddItem = () => {
-    setItems([...items, { id: Date.now(), description: '', quantity: 1, rate: 0 }]);
+    setItems([
+      ...items,
+      { id: Date.now(), description: '', quantity: 1, rate: 0 }
+    ]);
   };
 
   const handleRemoveItem = (id) => {
-    if (items.length > 1) {
+    if (items.length === 1) return;
+    if (window.confirm('Are you sure you want to delete this item?')) {
       setItems(items.filter(item => item.id !== id));
     }
   };
 
-  const subtotal = items.reduce((sum, item) => sum + (item.quantity * item.rate), 0);
+  const subtotal = items.reduce((sum, item) => sum + item.quantity * item.rate, 0);
   const tax = subtotal * (taxRate / 100);
   const total = subtotal + tax;
 
@@ -47,8 +48,13 @@ export default function InvoiceForm( { onSuccess}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!clientName.trim() || items.some(i => !i.description.trim())) {
+      alert('Please complete all required fields.');
+      return;
+    }
+
     const invoice = {
-      id: `INV-${Date.now()}`, // unique invoice ID
+      id: `INV-${Date.now()}`,
       clientName,
       clientEmail,
       projectDesc,
@@ -59,8 +65,9 @@ export default function InvoiceForm( { onSuccess}) {
       total,
       date: new Date().toISOString().split('T')[0],
     };
+
     console.log('Invoice Created:', invoice);
-    if (onSuccess) onSuccess();
+    if (onSuccess) onSuccess(invoice);
     alert('✅ Invoice Created! (check console)');
     resetForm();
   };
@@ -70,48 +77,58 @@ export default function InvoiceForm( { onSuccess}) {
       <h2>Create Invoice</h2>
 
       <div className="form-group">
-        <label>Client Name</label>
-        <input value={clientName} onChange={e => setClientName(e.target.value)} required />
+        <label htmlFor="clientName">Client Name *</label>
+        <input
+          id="clientName"
+          value={clientName}
+          onChange={(e) => setClientName(e.target.value)}
+          required
+        />
       </div>
 
       <div className="form-group">
-        <label>Client Email</label>
+        <label htmlFor="clientEmail">Client Email</label>
         <input
+          id="clientEmail"
           type="email"
           value={clientEmail}
-          onChange={e => setClientEmail(e.target.value)}
+          onChange={(e) => setClientEmail(e.target.value)}
           placeholder="example@email.com"
         />
       </div>
 
       <div className="form-group">
-        <label>Project Description</label>
-        <textarea value={projectDesc} onChange={e => setProjectDesc(e.target.value)} />
+        <label htmlFor="projectDesc">Project Description</label>
+        <textarea
+          id="projectDesc"
+          value={projectDesc}
+          onChange={(e) => setProjectDesc(e.target.value)}
+        />
       </div>
 
       <div className="form-group">
-        <label>Line Items</label>
+        <label>Line Items *</label>
         {items.map((item, index) => (
           <div className="item-row" key={item.id}>
             <input
               type="text"
               placeholder="Description"
               value={item.description}
-              onChange={e => handleItemChange(index, 'description', e.target.value)}
+              onChange={(e) => handleItemChange(index, 'description', e.target.value)}
               required
             />
             <input
               type="number"
               min="1"
               value={item.quantity}
-              onChange={e => handleItemChange(index, 'quantity', e.target.value)}
+              onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
               required
             />
             <input
               type="number"
               min="0"
               value={item.rate}
-              onChange={e => handleItemChange(index, 'rate', e.target.value)}
+              onChange={(e) => handleItemChange(index, 'rate', e.target.value)}
               required
             />
             <span className="item-total">₹{(item.quantity * item.rate).toFixed(2)}</span>
@@ -122,18 +139,19 @@ export default function InvoiceForm( { onSuccess}) {
       </div>
 
       <div className="form-group">
-        <label>Tax (%)</label>
+        <label htmlFor="taxRate">Tax (%)</label>
         <input
+          id="taxRate"
           type="number"
           min="0"
           value={taxRate}
-          onChange={e => setTaxRate(parseFloat(e.target.value))}
+          onChange={(e) => setTaxRate(parseFloat(e.target.value))}
         />
       </div>
 
       <div className="form-group">
-        <label>Notes</label>
-        <textarea value={notes} onChange={e => setNotes(e.target.value)} />
+        <label htmlFor="notes">Notes</label>
+        <textarea id="notes" value={notes} onChange={(e) => setNotes(e.target.value)} />
       </div>
 
       <div className="summary-box">
@@ -142,7 +160,13 @@ export default function InvoiceForm( { onSuccess}) {
         <p><strong>Total:</strong> ₹{total.toFixed(2)}</p>
       </div>
 
-      <button type="submit" className="submit-btn">💾 Save Invoice</button>
+      <button
+        type="submit"
+        className="submit-btn"
+        disabled={!clientName.trim() || items.some(i => !i.description.trim())}
+      >
+         Save Invoice
+      </button>
     </form>
   );
 }

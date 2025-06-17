@@ -455,6 +455,7 @@ body.dark-mode .navbar-right li a {
 
 
 /* ===== Invoice Form Styles ===== */
+/* ===== Invoice Form Container ===== */
 .invoice-form {
   background: rgba(255, 255, 255, 0.05);
   padding: 30px;
@@ -463,6 +464,7 @@ body.dark-mode .navbar-right li a {
   margin: 40px auto;
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(8px);
+  color: #f2f2f2;
 }
 
 .invoice-form h2 {
@@ -512,6 +514,101 @@ body.dark-mode .navbar-right li a {
   min-height: 100px;
   resize: vertical;
 }
+
+/* ===== Line Item Row ===== */
+.item-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.item-row input[type="text"],
+.item-row input[type="number"] {
+  flex: 1;
+  min-width: 100px;
+}
+
+.item-total {
+  font-weight: bold;
+  color: #d0ffd0;
+  margin-left: auto;
+  min-width: 80px;
+  text-align: right;
+}
+
+.item-row button {
+  background: transparent;
+  border: none;
+  color: #ff6b6b;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.item-row button:hover {
+  color: #ff3b3b;
+}
+
+/* ===== Add Item Button ===== */
+.add-item-btn {
+  margin-top: 10px;
+  padding: 10px 16px;
+  background-color: #00c8a6;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.add-item-btn:hover {
+  background-color: #00b194;
+}
+
+/* ===== Summary Box ===== */
+.summary-box {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.summary-box p {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #e0e0e0;
+}
+
+/* ===== Submit Button ===== */
+.submit-btn {
+  margin-top: 20px;
+  padding: 14px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  background-color: #00c8a6;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #00b194;
+}
+
+.submit-btn:disabled {
+  background-color: #999999;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 
 /* ===== Item Row ===== */
 .item-row {
@@ -699,6 +796,7 @@ body.dark-mode .navbar-right li a {
 
 
 /* ===== Invoice Preview Styles ===== */
+/* ===== Invoice Preview Styles ===== */
 .invoice-preview {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 20px;
@@ -713,9 +811,27 @@ body.dark-mode .navbar-right li a {
   font-family: 'Segoe UI', sans-serif;
 }
 
+/* Company Info */
+.company-info {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.company-info h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.company-info p {
+  font-size: 1rem;
+  color: #ccc;
+}
+
 /* Header */
-.invoice-header h2 {
-  font-size: 2.4rem;
+.invoice-header h3 {
+  font-size: 1.8rem;
   margin-bottom: 12px;
   font-weight: 600;
   color: #ffffff;
@@ -737,11 +853,21 @@ body.dark-mode .navbar-right li a {
   overflow: hidden;
 }
 
-.item-table th, .item-table td {
+.item-table caption {
+  caption-side: top;
+  padding: 10px 0;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #ffffffbb;
+}
+
+.item-table th,
+.item-table td {
   padding: 14px 18px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   font-size: 0.95rem;
   color: #f0f0f0;
+  text-align: left;
 }
 
 .item-table th {
@@ -776,6 +902,28 @@ body.dark-mode .navbar-right li a {
   color: #ddd;
 }
 
+/* Print Button */
+.invoice-actions {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.print-btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.print-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  color: #000;
+}
+
 /* No Invoice Message */
 .no-invoice {
   text-align: center;
@@ -783,6 +931,7 @@ body.dark-mode .navbar-right li a {
   font-size: 1.1rem;
   margin-top: 40px;
 }
+
 
 /* ===== Invoice View Page ===== */
 .invoice-view-container {
