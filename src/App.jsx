@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Components
 import Navbar from './components/Navbar';
+import Login from './components/Login';
+import Signup from './components/Signup';
 
 // Pages
 import Dashboard from './pages/Dashboard';
@@ -36,6 +38,8 @@ export default function App() {
           <Route path="/reports" element={<Reports />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/payments" element={<Payments />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='signup' element={<Signup />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

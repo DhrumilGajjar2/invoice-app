@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, FileText, PlusSquare, File, Users,
-  BarChart, Settings, Wallet, User, Menu
+  BarChart, Settings, Wallet, User, Menu, LogIn, UserPlus
 } from 'lucide-react';
 import '../styles/main.css';
 
@@ -33,7 +33,9 @@ export default function Navbar() {
     { path: '/reports', label: 'Reports', icon: <BarChart size={18} /> },
     { path: '/settings', label: 'Settings', icon: <Settings size={18} /> },
     { path: '/payments', label: 'Payments', icon: <Wallet size={18} /> },
-    { path: '/profile', label: 'Profile', icon: <User size={18} /> }
+    { path: '/profile', label: 'Profile', icon: <User size={18} /> },
+    { path: '/login', label: 'Login', icon: <LogIn size={18} /> },
+    { path: '/signup', label: 'Signup', icon: <UserPlus size={18} /> }
   ];
 
   return (
@@ -59,8 +61,6 @@ export default function Navbar() {
             {darkMode ? '🌙' : '☀️'}
           </button>
         </li>
-
-        
       </ul>
     </nav>
   );
