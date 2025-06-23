@@ -78,22 +78,27 @@ body.dark-mode .navbar {
 }
 
 .navbar-right li {
-  display: flex;
-  align-items: center;
+  position: relative;
 }
 
-.navbar-right li a {
+.navbar-right li a,
+.navbar-right li button {
   display: flex;
   align-items: center;
   gap: 6px;
-  text-decoration: none;
+  background: none;
+  border: none;
+  font: inherit;
   color: var(--color-light-text);
   font-weight: 500;
   padding: 6px 4px;
+  text-decoration: none;
+  cursor: pointer;
   transition: color var(--transition-speed), border-bottom var(--transition-speed);
 }
 
-body.dark-mode .navbar-right li a {
+body.dark-mode .navbar-right li a,
+body.dark-mode .navbar-right li button {
   color: var(--color-dark-text);
 }
 
@@ -103,8 +108,52 @@ body.dark-mode .navbar-right li a {
   font-weight: 600;
 }
 
-.navbar-right li a:hover {
+.navbar-right li a:hover,
+.navbar-right li button:hover {
   color: var(--color-primary);
+}
+
+/* === Dropdown Menu === */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--color-light-bg);
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 999;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+}
+
+body.dark-mode .dropdown-menu {
+  background: var(--color-dark-surface);
+  border-color: #555;
+}
+
+.dropdown-menu li {
+  padding: 6px 10px;
+}
+
+.dropdown-menu li a {
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.dropdown-menu li a:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 6px;
+}
+
+body.dark-mode .dropdown-menu li a:hover {
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 /* === Theme Toggle Button === */
@@ -120,15 +169,6 @@ body.dark-mode .navbar-right li a {
 .theme-toggle:hover {
   transform: scale(1.1);
   color: var(--color-primary);
-}
-
-/* === Avatar Dropdown === */
-.avatar-dropdown .avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-  cursor: pointer;
 }
 
 /* === Responsive Design === */
@@ -167,12 +207,30 @@ body.dark-mode .navbar-right li a {
     width: 100%;
   }
 
-  .navbar-right li a {
+  .navbar-right li a,
+  .navbar-right li button {
     display: block;
     width: 100%;
     padding: 10px 16px;
+    justify-content: flex-start;
+  }
+
+  .dropdown-menu {
+    position: relative;
+    top: 0;
+    left: 0;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    min-width: 100%;
+  }
+
+  .dropdown-menu li a {
+    padding: 10px 24px;
   }
 }
+
 
 
 
